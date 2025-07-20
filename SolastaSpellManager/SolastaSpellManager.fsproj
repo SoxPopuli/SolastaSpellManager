@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>    
+	<TargetFramework>net40</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+	<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+	<DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Library.fs" />
+    <None Include="Script.fsx" />
+  </ItemGroup>
+
+<ItemGroup>
+	<PackageReference Include="FSharp.Core" Version="4.1.18" />
+</ItemGroup>
+
+<ItemGroup>
+  <Reference Include="0Harmony">
+    <HintPath>Z:\home\Downloads\Mods\UnityModManager\v0.24.6\0Harmony.dll</HintPath>
+  </Reference>
+  <Reference Include="Assembly-CSharp">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\Assembly-CSharp.dll</HintPath>
+  </Reference>
+  <Reference Include="Assembly-CSharp-firstpass">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+  </Reference>
+  <Reference Include="UnityEngine">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.dll</HintPath>
+  </Reference>
+  <Reference Include="UnityEngine.CoreModule">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+  </Reference>
+  <Reference Include="UnityEngine.IMGUIModule">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+  </Reference>
+  <Reference Include="UnityEngine.UI">
+    <HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.UI.dll</HintPath>
+  </Reference>
+  <Reference Include="UnityModManager">
+    <HintPath>Z:\home\Downloads\Mods\UnityModManager\v0.24.6\UnityModManager.dll</HintPath>
+  </Reference>
+</ItemGroup>
+
+<ItemGroup>
+  <PackageReference Update="System.ValueTuple" Version="4.3.0" />
+</ItemGroup>
+
+</Project>

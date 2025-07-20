@@ -1,0 +1,12 @@
+{
+  "Id": "SolastaSpellManager",
+  "DisplayName": "Solasta Spell Manager",
+  "Author": "SoxPopuli",
+  "Version": "0.1.0",
+  "ManagerVersion": "0.24.6",
+  "GameVersion": "1.5.97",
+  "Requirements": [ ],
+  "LoadAfter": [ ],
+  "AssemblyName": "SolastaSpellManager.dll",
+  "EntryMethod": "SolastaSpellManager.Main.load"
+}
