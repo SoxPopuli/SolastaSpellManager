@@ -28,14 +28,14 @@ let load (modEntry: UnityModManager.ModEntry) =
 
 [<HarmonyPatch(typeof<CharacterActionPanel>)>]
 [<HarmonyPatch("DeviceFunctionEngaged")>]
-type DeviceFunctionEngagedPatch =
-    static member actionParamsRef =
+module DeviceFunctionEngagedPatch =
+    let actionParamsRef =
         AccessTools.FieldRefAccess<CharacterActionPanel, CharacterActionParams>("actionParams")
 
-    static member tmpUsableDeviceFunctionRef =
+    let tmpUsableDeviceFunctionRef =
         AccessTools.FieldRefAccess<CharacterActionPanel, RulesetDeviceFunction>("tmpUsableDeviceFunction")
 
-    static member Prefix
+    let Prefix
         (
             __instance: CharacterActionPanel,
             guiCharacter: GuiCharacter,
@@ -44,7 +44,7 @@ type DeviceFunctionEngagedPatch =
             addedCharges: int,
             subSpellIndex: int
         ) =
-        let actionParams = DeviceFunctionEngagedPatch.actionParamsRef.Invoke(__instance)
+        let actionParams = actionParamsRef.Invoke(__instance)
 
         let confirmed =
             AccessTools.Method(typeof<CharacterActionPanel>, "DeviceFunctionConfirmed")
@@ -69,7 +69,7 @@ type DeviceFunctionEngagedPatch =
                     subSpellIndex
                 )
 
-            DeviceFunctionEngagedPatch.tmpUsableDeviceFunctionRef.Invoke(__instance) <- usableDeviceFunction
+            tmpUsableDeviceFunctionRef.Invoke(__instance) <- usableDeviceFunction
 
             let overwriteConcentrationPrompt onConfirm onCancel (spell: RulesetEffectSpell) =
                 let concentratedSpellDef =
@@ -118,7 +118,7 @@ type DeviceFunctionEngagedPatch =
                     let character = GameLocationCharacter.GetFromActor(character)
                     meta.Bind(character, spell, metamagicSelected, metamagicIgnored)
                     meta.Show()
-                else 
+                else
                     executeSpellCast character spell
             | _ -> onConfirm ()
 
@@ -128,8 +128,8 @@ type DeviceFunctionEngagedPatch =
 
 [<HarmonyPatch(typeof<CharacterActionCastSpell>)>]
 [<HarmonyPatch("SpendMagicEffectUses")>]
-type MetamagicForItemSpells() =
-    static member Prefix(__instance: CharacterActionCastSpell) =
+module MetamagicForItemSpells =
+    let Prefix (__instance: CharacterActionCastSpell) =
         if
             __instance.ActiveSpell.OriginItem <> null
             && __instance.ActiveSpell.MetamagicOption <> null
