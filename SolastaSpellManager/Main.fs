@@ -93,6 +93,12 @@ type DeviceFunctionEngagedPatch =
                 character.ConcentratedSpell <> null
                 && spell.SpellDefinition.RequiresConcentration
 
+            let executeSpellCast (caster: RulesetCharacter) spellEffect =
+                if willOverwriteConcentration caster spellEffect then
+                    overwriteConcentrationPrompt onConfirm onCancel spellEffect
+                else
+                    onConfirm ()
+
             match actionParams.RulesetEffect with
             | :? RulesetEffectSpell as spell ->
                 if
@@ -105,26 +111,15 @@ type DeviceFunctionEngagedPatch =
                         fun (caster: GameLocationCharacter) (spellEffect: RulesetEffectSpell) metamagicOption ->
                             spellEffect.MetamagicOption <- metamagicOption
 
-                            if willOverwriteConcentration caster.RulesetCharacter spellEffect then
-                                overwriteConcentrationPrompt onConfirm onCancel spellEffect
-                            else
-                                onConfirm ()
+                            executeSpellCast caster.RulesetCharacter spellEffect
 
-                    let metamagicIgnored =
-                        fun () ->
-                            if willOverwriteConcentration character spell then
-                                overwriteConcentrationPrompt onConfirm onCancel spell
-                            else
-                                onConfirm ()
+                    let metamagicIgnored = fun () -> executeSpellCast character spell
 
                     let character = GameLocationCharacter.GetFromActor(character)
                     meta.Bind(character, spell, metamagicSelected, metamagicIgnored)
                     meta.Show()
-
-                else if willOverwriteConcentration character spell then
-                    overwriteConcentrationPrompt onConfirm onCancel spell
-                else
-                    onConfirm ()
+                else 
+                    executeSpellCast character spell
             | _ -> onConfirm ()
 
         __instance.DeviceSelectionPanel.Hide(true)
