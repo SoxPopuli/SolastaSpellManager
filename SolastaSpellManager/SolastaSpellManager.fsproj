@@ -10,7 +10,6 @@
 
 	<ItemGroup>
 		<Compile Include="Main.fs" />
-		<None Include="Script.fsx" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -23,12 +22,6 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
-
-	<!-- Custom target that runs after publish -->
-	<Target Name="CustomPublishAndZip" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-		
-		
-	</Target>
 
 	<ItemGroup>
 		<Reference Include="0Harmony">
