@@ -9,11 +9,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Logger.fs" />
+		<Compile Include="Utils.fs" />
+		<Compile Include="MetamagicForItemSpells.fs" />
+		<Compile Include="Settings.fs" />
 		<Compile Include="Main.fs" />
+		<None Include="Test.fsx" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FSharp.Core" Version="4.1.18" />
+		<PackageReference Include="FSharp.Core" Version="4.7.2" />
 		<PackageReference Update="System.ValueTuple" Version="4.3.0" />
 	</ItemGroup>
 
@@ -48,6 +53,9 @@
 		</Reference>
 		<Reference Include="UnityEngine.IMGUIModule">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.JSONSerializeModule">
+		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.UI.dll</HintPath>
