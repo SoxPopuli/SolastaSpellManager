@@ -9,9 +9,8 @@ open System
 [<Serializable>]
 type Settings() =
     inherit ModSettings()
-    let onChange () = Logger.log "OnChange called"
 
-    do onChange ()
+    member this.OnChange() = Logger.log "OnChange called"
 
     [<field: Draw("Enable Metamagic for Item Spells")>]
     [<field: SerializeField>]
@@ -34,17 +33,21 @@ type Settings() =
     static member Load(modEntry: ModEntry) : Settings =
         let filePath = Settings.settingsFilePath modEntry
 
-        if File.Exists filePath then
-            let file = File.OpenText(filePath)
-            let content = file.ReadToEnd()
+        let settings =
+            if File.Exists filePath then
+                let file = File.OpenText(filePath)
+                let content = file.ReadToEnd()
 
-            modEntry.Logger.Log(sprintf "Loaded settings from %s" filePath)
+                modEntry.Logger.Log(sprintf "Loaded settings from %s" filePath)
 
-            JsonUtility.FromJson(content)
-        else
-            Settings()
+                JsonUtility.FromJson<Settings>(content)
+            else
+                Settings()
+
+        settings.OnChange()
+        settings
 
     member this.Draw modEntry = this.Draw<Settings>(modEntry)
 
     interface IDrawable with
-        member this.OnChange() = onChange ()
+        member this.OnChange() = this.OnChange()
