@@ -140,6 +140,13 @@ module SpellManager =
             |> Option.map Seq.cast<GameLocationCharacter>
             |> Option.defaultValue Seq.empty
 
+        if
+            partyChars
+            |> Seq.forall (fun c -> state.playerStates.ContainsKey(c.Name))
+            |> not
+        then
+            state.playerStates.Clear()
+
         for p in partyChars do
             drawPlayer state p
 
