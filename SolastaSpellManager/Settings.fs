@@ -12,25 +12,22 @@ module SettingsTab =
         | Patches = 0
         | SpellManager = 1
 
-    let labels = [|
-        "Patches"
-        "Spell Manager"
-    |]
+    let labels = [| "Patches"; "Spell Manager" |]
 
 module SpellManager =
-    type RepertoireState = {
-        expanded: bool
-        spellLevelSelected: int
-    }
-    with static member Default = { expanded = false; spellLevelSelected = 0 }
+    type RepertoireState =
+        { expanded: bool
+          spellLevelSelected: int }
 
-    type PlayerState = {
-        repertoireStates: Dictionary<RulesetSpellRepertoire, RepertoireState>
-    }
+        static member Default =
+            { expanded = false
+              spellLevelSelected = 0 }
 
-    type State = {
-        playerStates: Dictionary<string, PlayerState>
-    }
+    type PlayerState =
+        { repertoireStates: Dictionary<RulesetSpellRepertoire, RepertoireState> }
+
+    type State =
+        { playerStates: Dictionary<string, PlayerState> }
 
     let addSpell (repertoire: RulesetSpellRepertoire) (spell: SpellDefinition) =
         if spell.SpellLevel = 0 then
@@ -48,14 +45,10 @@ module SpellManager =
         for s in spells do
             GUILayout.BeginHorizontal()
 
-            let knowsSpell = repertoire.HasKnowledgeOfSpell(s) 
+            let knowsSpell = repertoire.HasKnowledgeOfSpell(s)
 
             let nameStyle = GUIStyle()
-            nameStyle.normal.textColor <- 
-                if knowsSpell then
-                    Color.green
-                else
-                    Color.white
+            nameStyle.normal.textColor <- if knowsSpell then Color.green else Color.white
             nameStyle.fontStyle <- FontStyle.Bold
             nameStyle.wordWrap <- true
 
@@ -64,9 +57,7 @@ module SpellManager =
             labelStyle.alignment <- TextAnchor.MiddleLeft
             labelStyle.normal.textColor <- Color.white
 
-            GUILayout.Label(s.FormatTitle(), nameStyle, [|
-                GUILayout.Width(160.0f)
-            |])
+            GUILayout.Label(s.FormatTitle(), nameStyle, [| GUILayout.Width(160.0f) |])
 
             GUILayout.Space(40.0f)
 
@@ -79,15 +70,18 @@ module SpellManager =
             if knowsSpell then
                 if GUILayout.Button("Remove Spell", [| buttonWidth |]) then
                     removeSpell repertoire s |> ignore
-            else
-                if GUILayout.Button("Add Spell", [| buttonWidth |]) then
-                    addSpell repertoire s |> ignore
+            else if GUILayout.Button("Add Spell", [| buttonWidth |]) then
+                addSpell repertoire s |> ignore
 
             GUILayout.EndHorizontal()
 
             GUILayout.Space(40.0f)
 
-    let drawRepertoires (state: PlayerState) (player: GameLocationCharacter) (repertoires: List<RulesetSpellRepertoire>) =
+    let drawRepertoires
+        (state: PlayerState)
+        (player: GameLocationCharacter)
+        (repertoires: List<RulesetSpellRepertoire>)
+        =
         GUILayout.BeginVertical()
 
         for r in repertoires do
@@ -103,14 +97,10 @@ module SpellManager =
             if expanded then
                 let spellList = feature.SpellListDefinition
 
-                let minLevel = 
-                    if spellList.HasCantrips then
-                        0
-                    else
-                        1
+                let minLevel = if spellList.HasCantrips then 0 else 1
                 let maxLevel = spellList.MaxSpellLevel
 
-                let labels = seq {minLevel..maxLevel} |> Seq.map (fun i -> sprintf "L%i" i)
+                let labels = seq { minLevel..maxLevel } |> Seq.map (fun i -> sprintf "L%i" i)
                 spellLevelSelected <- GUILayout.Toolbar(repState.spellLevelSelected, labels |> Seq.toArray)
 
                 let spellLevel = spellLevelSelected + minLevel
@@ -118,7 +108,12 @@ module SpellManager =
 
                 drawSpells r spells spellLevel
 
-            state.repertoireStates.AddOrReplace(r, { repState with expanded = expanded; spellLevelSelected = spellLevelSelected })
+            state.repertoireStates.AddOrReplace(
+                r,
+                { repState with
+                    expanded = expanded
+                    spellLevelSelected = spellLevelSelected }
+            )
 
 
         GUILayout.EndVertical()
@@ -128,15 +123,16 @@ module SpellManager =
 
         GUILayout.Label(player.Name, [| GUILayout.Width(120.0f) |])
 
-        let playerState = state.playerStates.GetOrAdd(player.Name, { repertoireStates = Dictionary() })
+        let playerState =
+            state.playerStates.GetOrAdd(player.Name, { repertoireStates = Dictionary() })
+
         drawRepertoires playerState player player.RulesetCharacter.SpellRepertoires
 
         GUILayout.EndHorizontal()
 
     let draw state =
-        let characterService = 
-            ServiceRepository.GetService<IGameLocationCharacterService>()
-            |> Option.ofObj
+        let characterService =
+            ServiceRepository.GetService<IGameLocationCharacterService>() |> Option.ofObj
 
         let partyChars =
             characterService
@@ -151,7 +147,7 @@ module SpellManager =
 type Settings() =
     inherit ModSettings()
 
-    member this.ApplyPatches() = 
+    member this.ApplyPatches() =
         if this.metamagicForItemSpells then
             Harmony.run MetamagicForItemSpells.patch
         else
@@ -195,13 +191,12 @@ type Settings() =
         settings.ApplyPatches()
         settings
 
-    member this.Draw modEntry = 
-        this.selectedTab <- GUILayout.Toolbar((int)this.selectedTab, SettingsTab.labels) |> enum
+    member this.Draw modEntry =
+        this.selectedTab <- GUILayout.Toolbar((int) this.selectedTab, SettingsTab.labels) |> enum
+
         match this.selectedTab with
-        | SettingsTab.Tab.Patches -> 
-            this.Draw<Settings>(modEntry)
-        | SettingsTab.Tab.SpellManager ->
-            SpellManager.draw this.spellManagerState
+        | SettingsTab.Tab.Patches -> this.Draw<Settings>(modEntry)
+        | SettingsTab.Tab.SpellManager -> SpellManager.draw this.spellManagerState
         | x -> failwithf "Unexpected tab value %A" x
 
     interface IDrawable with
