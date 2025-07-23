@@ -1,4 +1,4 @@
-﻿module Logger
+﻿module SolastaSpellManager.Logger
 
 open type UnityModManagerNet.UnityModManager.ModEntry
 

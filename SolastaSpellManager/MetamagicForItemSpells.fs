@@ -5,9 +5,6 @@ open Utils
 
 [<HarmonyPatch(typeof<CharacterActionPanel>, "DeviceFunctionEngaged")>]
 module DeviceFunctionEngagedPatch =
-    type internal Marker = interface end
-    let moduleType = typeof<Marker>.DeclaringType
-
     let patchMethod =
         AccessTools.Method(typeof<CharacterActionPanel>, "DeviceFunctionEngaged")
 
@@ -109,19 +106,16 @@ module DeviceFunctionEngagedPatch =
         false
 
     let patch (harmony: Harmony) =
-        harmony.Patch(patchMethod, prefix = (moduleType.GetMethod("Prefix") |> HarmonyMethod))
+        harmony.Patch(patchMethod, prefix = (methodInfo <@ Prefix @> |> HarmonyMethod))
         |> ignore
 
     let unpatch (harmony: Harmony) =
-        harmony.Unpatch(patchMethod, HarmonyPatchType.Prefix)
+        harmony.Unpatch(patchMethod, methodInfo <@ Prefix @>)
 
 
 [<HarmonyPatch(typeof<CharacterActionCastSpell>)>]
 [<HarmonyPatch("SpendMagicEffectUses")>]
 module MetamagicForItemSpells =
-    type internal Marker = interface end
-    let moduleType = typeof<Marker>.DeclaringType
-
     let patchMethod =
         AccessTools.Method(typeof<CharacterActionCastSpell>, "SpendMagicEffectUses")
 
@@ -134,11 +128,11 @@ module MetamagicForItemSpells =
             character.ActivateMetamagic(__instance.ActiveSpell, __instance.ActiveSpell.MetamagicOption)
 
     let patch (harmony: Harmony) =
-        harmony.Patch(patchMethod, prefix = (moduleType.GetMethod("Prefix") |> HarmonyMethod))
+        harmony.Patch(patchMethod, prefix = (methodInfo <@ Prefix @> |> HarmonyMethod))
         |> ignore
 
     let unpatch (harmony: Harmony) =
-        harmony.Unpatch(patchMethod, HarmonyPatchType.Prefix)
+        harmony.Unpatch(patchMethod, methodInfo <@ Prefix @>)
 
 let patch (harmony: Harmony) =
     DeviceFunctionEngagedPatch.patch harmony

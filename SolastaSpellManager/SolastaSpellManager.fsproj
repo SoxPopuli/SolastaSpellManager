@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="Harmony.fs" />
 		<Compile Include="Logger.fs" />
 		<Compile Include="Utils.fs" />
 		<Compile Include="MetamagicForItemSpells.fs" />
@@ -56,6 +57,9 @@
 		</Reference>
 		<Reference Include="UnityEngine.JSONSerializeModule">
 		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+		</Reference>
+		<Reference Include="UnityEngine.TextRenderingModule">
+		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.UI.dll</HintPath>

@@ -10,7 +10,6 @@ open UnityModManagerNet
 let mutable staticLogger: ModEntry.ModLogger = null
 
 type Main(modEntry: ModEntry) =
-    let harmony = Harmony("com.soxpopuli.solastasavemanager")
     let logger = modEntry.Logger
 
     let settings = Settings.Load(modEntry)
@@ -24,7 +23,10 @@ type Main(modEntry: ModEntry) =
     let unpatchAll (harmony: Harmony) = MetamagicForItemSpells.patch harmony
 
     let onToggle (modEntry: ModEntry) value =
-        if value then patchAll harmony else unpatchAll harmony
+        if not value then
+            Harmony.unpatchAll ()
+        else
+            settings.ApplyPatches()
 
         true
 
