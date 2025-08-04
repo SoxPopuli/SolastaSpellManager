@@ -32,40 +32,52 @@
 	<ItemGroup>
 		<Reference Include="0Harmony">
 			<HintPath>Z:\home\Downloads\Mods\UnityModManager\v0.24.6\0Harmony.dll</HintPath>
+			<HintPath>..\vendored\0Harmony.dll</HintPath>
 		</Reference>
 		<Reference Include="Assembly-CSharp">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\Assembly-CSharp.dll</HintPath>
+			<HintPath>..\vendored\Assembly-CSharp.dll</HintPath>
 		</Reference>
 		<Reference Include="Assembly-CSharp-firstpass">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+			<HintPath>..\vendored\Assembly-CSharp-firstpass.dll</HintPath>
 		</Reference>
 		<Reference Include="System.Runtime">
 		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\System.Runtime.dll</HintPath>
+		  <HintPath>..\vendored\System.Runtime.dll</HintPath>
 		  <SpecificVersion>False</SpecificVersion>
 		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.dll</HintPath>
+			<HintPath>..\vendored\UnityEngine.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.AnimationModule">
 			<HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+			<HintPath>..\vendored\UnityEngine.AnimationModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.CoreModule">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+			<HintPath>..\vendored\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.IMGUIModule">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+			<HintPath>..\vendored\UnityEngine.IMGUIModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.JSONSerializeModule">
 		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.JSONSerializeModule.dll</HintPath>
+		  <HintPath>..\vendored\UnityEngine.JSONSerializeModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.TextRenderingModule">
 		  <HintPath>..\..\..\..\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+		  <HintPath>..\vendored\UnityEngine.TextRenderingModule.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>Z:\steam\steamapps\common\Slasta_COTM\Solasta_Data\Managed\UnityEngine.UI.dll</HintPath>
+			<HintPath>..\vendored\UnityEngine.UI.dll</HintPath>
 		</Reference>
 		<Reference Include="UnityModManager">
 			<HintPath>Z:\home\Downloads\Mods\UnityModManager\v0.24.6\UnityModManager.dll</HintPath>
+			<HintPath>..\vendored\UnityModManager.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 </Project>
