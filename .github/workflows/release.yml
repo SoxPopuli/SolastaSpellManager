@@ -7,6 +7,10 @@ on:
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   release:
     runs-on: windows-latest
@@ -21,10 +25,7 @@ jobs:
 
       - name: Create Release
         run: >
-          gh release create "$tag" "SolastaSpellManager.zip"
-              --repo="${GITHUB_REPOSITORY}"
-              --title="${tag#v}"
+          gh release create "${tag}" "SolastaSpellManager.zip" \
+              --repo="${GITHUB_REPOSITORY}" \
+              --title="${tag#v}" \
               --generate-notes
-
-
-
