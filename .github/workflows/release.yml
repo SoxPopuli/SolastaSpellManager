@@ -1,0 +1,30 @@
+name: Release
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      tag: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Package
+        run: dotnet fsi Package.fsx
+
+      - name: Create Release
+        run: >
+          gh release create "$tag" "SolastaSpellManager.zip"
+              --repo="${GITHUB_REPOSITORY}"
+              --title="${tag#v}"
+              --generate-notes
+
+
+
